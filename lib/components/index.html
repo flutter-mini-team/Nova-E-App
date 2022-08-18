@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <base target="_top">
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+            crossorigin="anonymous">
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+        <script
+            src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+        <title>Upload Files</title>
+    </head>
+
+    <body>
+        <div style="margin-left:30%">
+            <div id="upload">
+                <h1>File Uploader</h1>
+                <form id="formUpload">
+                    <input type="file" name="myFile" mulitple>
+                    <input type="text" name="nameFolder" id="nameFolder"
+                        placeholder="Name File" required mulitple>
+                    <input type="text" name="linkFolder" id="linkFolder"
+                        style="display:none" placeholder="Link folder" required
+                        mulitple>
+                    <br>
+                    <br>
+                    <input type="button" id="submitBtn" value="Upload Files">
+                    <label id="resp"></label>
+                    <select class="form-control" id="Changelink_name"
+                        style="width:220px" onchange="onchangelinkname()">
+                        <option value="1">New Folder</option>
+                        <option value="2">Link Folder</option>
+                    </select>
+                </form>
+
+            </div>
+
+        </div>
+        <script>
+    document.getElementById('submitBtn').addEventListener('click',
+        function(e){
+          console.log(this.parentNode);
+          google.script.run.withSuccessHandler(onSuccess).uploadFiles(this.parentNode)
+        })
+        
+        function onSuccess(data){
+          document.getElementById('formUpload').reset();
+          document.getElementById('resp').innerHTML = "File Uploaded to the path " +data;
+        }
+        
+    function onchangelinkname(){
+      var id = document.getElementById('Changelink_name').value;
+      if( id == 1 ){
+        document.getElementById('nameFolder').style.display = 'block';
+        document.getElementById('linkFolder').style.display = 'none';
+      } else {
+        document.getElementById('nameFolder').style.display = 'none';
+        document.getElementById('linkFolder').style.display = 'block';
+      }    
+    }  
+  </script>
+    </body>
+</html>
